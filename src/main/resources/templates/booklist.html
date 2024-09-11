@@ -3,13 +3,15 @@
 
 <head>
     <title>Book List</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css" />
+
 </head>
 
 <body>
     <h1>Book List</h1>
     <table>
         <tbody>
-            <table>
+            <table class="table table-striped">
                 <tr>
                     <th>Author</th>
                     <th>Title</th>
@@ -22,6 +24,7 @@
                     <td th:text="${book.isbn}"></td>
                     <td th:text="${book.publicationYear}"></td>
                     <td><a th:href="@{/delete/{id}(id=${book.id})}">Delete</a></td>
+                    <td><a th:href="@{/edit/{id}(id=${book.id})}">Edit</a></td>
                 </tr>
             </table>
             <a href="/add">Add student</a>

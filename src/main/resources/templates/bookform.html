@@ -2,14 +2,14 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>Book Add Form</title>
+    <title>Book Form</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 
 <body>
-    <h1>Add book</h1>
+    <h1>Book Details</h1>
     <div>
-        <form th:object="${book}" th:action="@{save}" action="#" method="post">
+        <form th:object="${book}" th:action="@{/save}" action="#" method="post">
             <label for="author">Author</label>
             <input type="text" id="author" th:field="*{author}" />
 

@@ -3,31 +3,39 @@
 
 <head>
     <title>Book List</title>
-    <link rel="stylesheet" href="/css/bootstrap.min.css" />
-
+    <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" th:href="@{css/bootstrap.min.css}" />
 </head>
 
 <body>
-    <h1>Book List</h1>
+    <h1 class="text-center">Books</h1>
     <table>
         <tbody>
             <table class="table table-striped">
-                <tr>
+                <thead>
                     <th>Author</th>
                     <th>Title</th>
                     <th>ISBN</th>
                     <th>Year</th>
-                </tr>
+                    <th>Category</th>
+                    <th></th>
+                    <th></th>
+                </thead>
                 <tr th:each="book : ${books}">
                     <td th:text="${book.author}"></td>
                     <td th:text="${book.title}"></td>
                     <td th:text="${book.isbn}"></td>
                     <td th:text="${book.publicationYear}"></td>
-                    <td><a th:href="@{/delete/{id}(id=${book.id})}">Delete</a></td>
-                    <td><a th:href="@{/edit/{id}(id=${book.id})}">Edit</a></td>
+                    <td th:text="${book.category.name}"></td>
+                    <td><a th:href="@{/delete/{id}(id=${book.id})}" class="btn btn-danger" role="button">Delete</a>
+                    </td>
+                    <td>
+                        <a th:href="@{/edit/{id}(id=${book.id})}" class="btn btn-primary" role="button">Edit</a>
+                    </td>
                 </tr>
             </table>
-            <a href="/add">Add student</a>
+            <div class="text-center">
+                <a href=" /add" class="btn btn-success">Add Book</a>
+            </div>
         </tbody>
     </table>
 </body>

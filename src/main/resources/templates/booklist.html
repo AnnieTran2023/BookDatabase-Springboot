@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns="https://www.thymeleaf.org">
+
+<head>
+    <title>Book List</title>
+</head>
+
+<body>
+    <h1>Book List</h1>
+    <table>
+        <tbody>
+            <table>
+                <tr>
+                    <th>Author</th>
+                    <th>Title</th>
+                    <th>ISBN</th>
+                    <th>Year</th>
+                </tr>
+                <tr th:each="book : ${books}">
+                    <td th:text="${book.author}"></td>
+                    <td th:text="${book.title}"></td>
+                    <td th:text="${book.isbn}"></td>
+                    <td th:text="${book.publicationYear}"></td>
+                    <td><a th:href="@{/delete/{id}(id=${book.id})}">Delete</a></td>
+                </tr>
+            </table>
+            <a href="/add">Add student</a>
+        </tbody>
+    </table>
+</body>
+
+</html>

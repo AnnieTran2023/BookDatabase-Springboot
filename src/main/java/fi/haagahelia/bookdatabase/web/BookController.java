@@ -1,11 +1,15 @@
 package fi.haagahelia.bookdatabase.web;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import fi.haagahelia.bookdatabase.domain.Book;
 import fi.haagahelia.bookdatabase.domain.BookRepository;
@@ -51,6 +55,17 @@ public class BookController {
         model.addAttribute("book", book);
         model.addAttribute("categories", crepository.findAll());
         return "bookform";
+    }
+
+    @RequestMapping(value = "/books", method = RequestMethod.GET)
+    public @ResponseBody List<Book> bookListRest() {
+        return (List<Book>) repository.findAll();
+    }
+
+    @RequestMapping(value = "/book/{id}", method = RequestMethod.GET)
+    public @ResponseBody Book findBookRest(@PathVariable("id") Long id) {
+        Optional<Book> book = repository.findById(id);
+        return book.orElse(null); 
     }
 
 }

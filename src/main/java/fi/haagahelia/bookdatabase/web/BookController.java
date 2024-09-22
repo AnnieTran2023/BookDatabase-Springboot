@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -58,23 +59,28 @@ public class BookController {
         return "bookform";
     }
 
-    //Rest service for getting all books
+    // Rest service for getting all books
     @RequestMapping(value = "/books", method = RequestMethod.GET)
     public @ResponseBody List<Book> bookListRest() {
         return (List<Book>) repository.findAll();
     }
 
-    //Rest service for finding a book by id 
+    // Rest service for finding a book by id
     @RequestMapping(value = "/book/{id}", method = RequestMethod.GET)
     public @ResponseBody Book findBookRest(@PathVariable("id") Long id) {
         Optional<Book> book = repository.findById(id);
         return book.orElse(null);
     }
 
-    //Rest service for finding a book by title
+    // Rest service for finding a book by title
     @RequestMapping(value = "/books/search/title", method = RequestMethod.GET)
     public @ResponseBody List<Book> findBookByTitle(@RequestParam("title") String title) {
         return repository.findByTitle(title);
     }
 
+    // Rest service for adding a book
+    @RequestMapping(value = "/book/add", method = RequestMethod.POST)
+    public @ResponseBody Book addBook(@RequestBody Book newBook) {
+        return repository.save(newBook);
+    }
 }

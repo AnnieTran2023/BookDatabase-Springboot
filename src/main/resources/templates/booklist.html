@@ -7,37 +7,44 @@
 </head>
 
 <body>
-    <h1 class="text-center">Books</h1>
-    <table>
-        <tbody>
-            <table class="table table-striped">
-                <thead>
-                    <th>Author</th>
-                    <th>Title</th>
-                    <th>ISBN</th>
-                    <th>Year</th>
-                    <th>Category</th>
-                    <th></th>
-                    <th></th>
-                </thead>
-                <tr th:each="book : ${books}">
-                    <td th:text="${book.author}"></td>
-                    <td th:text="${book.title}"></td>
-                    <td th:text="${book.isbn}"></td>
-                    <td th:text="${book.publicationYear}"></td>
-                    <td th:text="${book.category.name}"></td>
-                    <td><a th:href="@{/delete/{id}(id=${book.id})}" class="btn btn-danger" role="button">Delete</a>
-                    </td>
-                    <td>
-                        <a th:href="@{/edit/{id}(id=${book.id})}" class="btn btn-primary" role="button">Edit</a>
-                    </td>
-                </tr>
-            </table>
-            <div class="text-center">
-                <a href=" /add" class="btn btn-success">Add Book</a>
-            </div>
-        </tbody>
-    </table>
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center my-3">
+            <h1 class="text-center mb-0">Books</h1>
+            <form th:action="@{/logout}" method="post">
+                <input type="submit" value="Sign Out" class="btn btn-secondary" />
+            </form>
+        </div>
+        <table>
+            <tbody>
+                <table class="table table-striped">
+                    <thead>
+                        <th>Author</th>
+                        <th>Title</th>
+                        <th>ISBN</th>
+                        <th>Year</th>
+                        <th>Category</th>
+                        <th></th>
+                        <th></th>
+                    </thead>
+                    <tr th:each="book : ${books}">
+                        <td th:text="${book.author}"></td>
+                        <td th:text="${book.title}"></td>
+                        <td th:text="${book.isbn}"></td>
+                        <td th:text="${book.publicationYear}"></td>
+                        <td th:text="${book.category.name}"></td>
+                        <td><a th:href="@{/delete/{id}(id=${book.id})}" class="btn btn-danger" role="button">Delete</a>
+                        </td>
+                        <td>
+                            <a th:href="@{/edit/{id}(id=${book.id})}" class="btn btn-primary" role="button">Edit</a>
+                        </td>
+                    </tr>
+                </table>
+                <div class="text-center">
+                    <a href=" /add" class="btn btn-success">Add Book</a>
+                </div>
+            </tbody>
+        </table>
+    </div>
 </body>
 
 </html>

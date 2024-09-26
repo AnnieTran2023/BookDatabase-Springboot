@@ -83,4 +83,11 @@ public class BookController {
     public @ResponseBody Book addBook(@RequestBody Book newBook) {
         return repository.save(newBook);
     }
+
+    // Rest service for deleting a book
+    @RequestMapping(value = "/book/delete/{id}", method = RequestMethod.DELETE)
+    public @ResponseBody String deleteBook(@PathVariable("id") Long id) {
+        repository.deleteById(id);
+        return "Book with ID " + id + " deleted successfully.";
+    }
 }

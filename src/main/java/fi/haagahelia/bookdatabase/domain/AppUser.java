@@ -7,7 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-public class User {
+public class AppUser {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false, updatable = false)
@@ -16,8 +16,8 @@ public class User {
     @Column(name = "username", nullable = false, unique = true)
     private String username;
 
-    @Column(name = "password", nullable = false)
-    private String password;
+    @Column(name = "passwordHash", nullable = false)
+    private String passwordHash;
 
     @Column(name = "role", nullable = false)
     private String role;
@@ -25,11 +25,11 @@ public class User {
     @Column(name = "email", nullable = false)
     private String email;
 
-    public User () {}
+    public AppUser () {}
 
-    public User(String username, String password, String role, String email) {
+    public AppUser(String username, String passwordHash, String role, String email) {
         this.username = username;
-        this.password = password;
+        this.passwordHash = passwordHash;
         this.role = role;
         this.email = email;
     }
@@ -50,12 +50,12 @@ public class User {
         this.username = username;
     }
 
-    public String getPassword() {
-        return password;
+    public String getPasswordHash() {
+        return passwordHash;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPasswordHash(String password) {
+        this.passwordHash = password;
     }
 
     public String getRole() {

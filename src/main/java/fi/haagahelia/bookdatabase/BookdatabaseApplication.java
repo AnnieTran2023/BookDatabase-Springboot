@@ -5,6 +5,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import fi.haagahelia.bookdatabase.domain.AppUser;
+import fi.haagahelia.bookdatabase.domain.AppUserRepository;
 import fi.haagahelia.bookdatabase.domain.Book;
 import fi.haagahelia.bookdatabase.domain.BookRepository;
 import fi.haagahelia.bookdatabase.domain.Category;
@@ -18,7 +20,7 @@ public class BookdatabaseApplication {
 	}
 
 	@Bean
-	public CommandLineRunner bookDemo(BookRepository repository, CategoryRepository crepository) {
+	public CommandLineRunner bookDemo(BookRepository repository, CategoryRepository crepository, AppUserRepository urepository) {
 		return (args) -> {
 			// Creating categories
 			Category fiction = new Category("Fiction");
@@ -30,6 +32,14 @@ public class BookdatabaseApplication {
 			crepository.save(fiction);
 			crepository.save(scienceFiction);
 			crepository.save(mystery);
+
+			//Create users
+			AppUser user1 = new AppUser("user", "$2a$06$3jYRJrg0ghaaypjZ/.g4SethoeA51ph3UD4kZi9oPkeMTpjKU5uo6", "USER","user@email.fi");
+			AppUser user2 = new AppUser("admin", "$2a$10$0MMwY.IQqpsVc1jC8u7IJ.2rT8b0Cd3b3sfIBGV2zfgnPGtT4r0.C",
+					"ADMIN", "admin@email.fi");
+
+			urepository.save(user1);
+			urepository.save(user2);
 
 			// Creating books and associating them with categories
 			Book book1 = new Book("JK Rowling", "Harry Potter", "978-1-4088-1234-5", 2023, fiction);

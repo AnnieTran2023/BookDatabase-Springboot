@@ -3,21 +3,22 @@ package fi.haagahelia.bookdatabase;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+
+import fi.haagahelia.bookdatabase.web.UserDetailServiceImpl;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
 @EnableMethodSecurity(securedEnabled = true)
 public class SecurityConfig {
+        @Autowired
+        private UserDetailServiceImpl userDetailsService;
 
         @Bean
         public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -26,7 +27,7 @@ public class SecurityConfig {
                                                 .anyRequest().authenticated() // Require authentication for all requests
                                 )
                                 .formLogin(form -> form
-                                .loginPage("/login")
+                                                .loginPage("/login")
                                                 .permitAll() // Allow everyone to see the login page
                                 )
                                 .logout(logout -> logout
@@ -36,19 +37,8 @@ public class SecurityConfig {
                 return http.build();
         }
 
-        @Bean
-        public UserDetailsService userDetailsService() {
-                List<UserDetails> users = new ArrayList<UserDetails>();
-                PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
-
-                UserDetails user1 = User.withUsername("user").password(passwordEncoder.encode("user")).roles("USER")
-                                .build();
-                UserDetails user2 = User.withUsername("admin").password(passwordEncoder.encode("admin")).roles("ADMIN")
-                                .build();
-
-                users.add(user1);
-                users.add(user2);
-
-                return new InMemoryUserDetailsManager(users);
+        @Autowired
+        public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+                auth.userDetailsService(userDetailsService).passwordEncoder(new BCryptPasswordEncoder());
         }
 }

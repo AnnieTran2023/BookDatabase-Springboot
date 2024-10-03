@@ -1,6 +1,8 @@
 package fi.haagahelia.bookdatabase;
 
 import java.util.List;
+import fi.haagahelia.bookdatabase.domain.Category;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
@@ -18,10 +20,18 @@ public class BookRepositoryTest {
 
     @Test
     public void findByTitleShouldReturnBook (){
-        List<Book> books = repository.findByTitle("A Farewell to Arms");
+        List<Book> books = repository.findByTitle("Harry Potter");
         
         assertThat(books).hasSize(1);
-        assertThat(books.get(0).getAuthor()).isEqualTo("Ernest Hemingway");
+        assertThat(books.get(0).getAuthor()).isEqualTo("JK Rowling");
+    }
+
+    @Test
+    public void createNewBook() {
+        Category fiction = new Category("Fiction");
+        Book book = new Book("Fujiko", "Doraemon", "978-2-4088-1234-6", 1999, fiction);
+        repository.save(book);
+        assertThat(book.getId()).isNotNull();
     }
 
 }

@@ -34,4 +34,12 @@ public class BookRepositoryTest {
         assertThat(book.getId()).isNotNull();
     }
 
+    @Test
+    public void deleteBook() {
+        List<Book> books = repository.findByTitle("Harry Potter");
+        repository.deleteById(books.get(0).getId());
+        books = repository.findByTitle("Harry Potter");
+        assertThat(books).hasSize(0);
+    }
+
 }

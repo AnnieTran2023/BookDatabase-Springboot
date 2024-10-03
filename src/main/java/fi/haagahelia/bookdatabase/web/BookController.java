@@ -53,14 +53,14 @@ public class BookController {
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public String deleteBook(@PathVariable("id") Long id, Model model) {
         repository.deleteById(id);
         return "redirect:/booklist";
     }
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public String editBook(@PathVariable("id") Long id, Model model) {
         Book book = repository.findById(id).orElse(null);
         model.addAttribute("book", book);
@@ -82,8 +82,8 @@ public class BookController {
     }
 
     // Rest service for finding a book by title
-    @RequestMapping(value = "/books/search/title", method = RequestMethod.GET)
-    public @ResponseBody List<Book> findBookByTitle(@RequestParam("title") String title) {
+    @RequestMapping(value = "/book/search/{title}", method = RequestMethod.GET)
+    public @ResponseBody List<Book> findBookByTitle(@PathVariable("title") String title) {
         return repository.findByTitle(title);
     }
 
@@ -94,9 +94,9 @@ public class BookController {
     }
 
     // Rest service for deleting a book
-    @RequestMapping(value = "/book/delete/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/book/delete/{id}", method = RequestMethod.GET)
     public @ResponseBody String deleteBook(@PathVariable("id") Long id) {
         repository.deleteById(id);
-        return "Book with ID " + id + " deleted successfully.";
+        return "Book deleted successfully";
     }
 }

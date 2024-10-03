@@ -21,4 +21,19 @@ public class AppUserRepositoryTest {
         assertThat(user).isNotNull();
         assertThat(user.getUsername()).isEqualTo("admin");
     }
+
+    @Test
+    public void testCreateUser() {
+        AppUser user = new AppUser("admin2", "password","ADMIN","admin@mail.com");
+        repository.save(user);
+        assertThat(user.getId()).isNotNull();
+    }
+
+    @Test
+    public void testDeleteUser() {
+        AppUser user = repository.findByUsername("user");
+        repository.deleteById(user.getId());
+        user = repository.findByUsername("user");
+        assertThat(user).isNull();
+    }
 }

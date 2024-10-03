@@ -24,4 +24,19 @@ public class CategoryRepositoryTest {
         assertThat(categories.get(0).getName()).isEqualTo("Fiction");
     }
 
+    @Test
+    public void createNewCategory() {
+        Category category = new Category("Science");
+        repository.save(category);
+        assertThat(category.getId()).isNotNull();
+    }
+
+    @Test
+    public void deleteCategory() {
+        List<Category> categories = repository.findByName("Fiction");
+        repository.deleteById(categories.get(0).getId());
+        categories = repository.findByName("Fiction");
+        assertThat(categories).hasSize(0);
+    }
+
 }

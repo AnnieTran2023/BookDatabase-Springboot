@@ -13,8 +13,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.hamcrest.Matchers.containsString;
 
-import fi.haagahelia.bookdatabase.domain.BookRepository;
-
 @SpringBootTest
 @AutoConfigureMockMvc
 @Import(TestSecurityConfig.class) // Import the test security configuration to bypass the login
@@ -22,9 +20,6 @@ public class BookControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
-
-    @Autowired
-    private BookRepository bookRepository;
 
     @Test
     public void testGetBookById() throws Exception {

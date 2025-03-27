@@ -14,7 +14,7 @@ class BookdatabaseApplicationTests {
 	@Autowired
 	private BookController controller;
 	@Test
-	void contextLoads() throws Exception{
+	void contextLoads() throws Exception {
 		assertThat(controller).isNotNull();
 	}
 

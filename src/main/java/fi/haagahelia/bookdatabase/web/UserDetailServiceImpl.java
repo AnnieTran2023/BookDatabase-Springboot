@@ -10,9 +10,7 @@ import org.springframework.stereotype.Service;
 import fi.haagahelia.bookdatabase.domain.AppUser;
 import fi.haagahelia.bookdatabase.domain.AppUserRepository;
 
-/**
- * This class is used by spring security to authenticate and authorize user
- **/
+
 @Service
 public class UserDetailServiceImpl implements UserDetailsService {
 
